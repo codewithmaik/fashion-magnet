@@ -1,0 +1,8 @@
+# Ignore SQLite database files as they contain personal data
+*.sqlite3
+
+# Ignore compiled Python files
+*.pyc
+
+# Ignore Python cache directory
+__pycache__/
