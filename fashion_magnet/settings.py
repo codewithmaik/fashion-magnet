@@ -47,7 +47,9 @@ INSTALLED_APPS = [
     'allauth.account',
     
     # Allauth's social account functionality for social authentication
-    'allauth.socialaccount'
+    'allauth.socialaccount',
+
+    'home'
 ]
 
 MIDDLEWARE = [
@@ -65,7 +67,10 @@ ROOT_URLCONF = 'fashion_magnet.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            os.path.join(BASE_DIR, 'templates'),
+            os.path.join(BASE_DIR, 'templates', 'allauth')
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
