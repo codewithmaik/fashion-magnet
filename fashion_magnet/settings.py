@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     # Allauth's social account functionality for social authentication
     'allauth.socialaccount',
 
-    'home'
+    'home',
+    'products'
 ]
 
 MIDDLEWARE = [
