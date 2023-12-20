@@ -15,7 +15,7 @@ def bag_contents(request):
     # Get product for every item in bag, calculate the total price and increase the product count
     for item_id, quantity in bag.items():
         product = get_object_or_404(Product, pk=item_id)
-        total = quantity * product.price
+        total += quantity * product.price
         product_count += quantity
 
         # Add object to list of items to access it all over the application
