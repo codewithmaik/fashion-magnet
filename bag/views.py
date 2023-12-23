@@ -23,18 +23,29 @@ def add_to_bag(request, item_id):
     # Set bag variable equal to current value in the session if it already exists, setting it equal to an empty dictionary otherwise
     bag = request.session.get('bag', {})
 
+    # Check if selected item has a size
     if size:
+        # Check if selected item exists in bag
         if item_id in list(bag.keys()):
+            # Check if selected product with specified size already exists in bag
             if size in bag[item_id]['item_by_size'].keys():
+                # Increase quantity of selected item and specified size
                 bag[item_id]['item_by_size'][size] += quantity
             else:
+                # Update quantity of existing entry with specified size
                 bag[item_id]['item_by_size'][size] = quantity
+        else:
+            # Create new entry for the item as a dictionary in case user selects same item with multiple sizes
+            bag[item_id] = { 'item_by_size': { size: quantity }}
 
-    # Increase the quantity if the item_id already exists in the bag variable, add item_id with its quantity otherwise
-    if item_id in list(bag.keys()):
-        bag[item_id] += quantity
     else:
-        bag[item_id] = quantity
+        # Check if selected item exists in the bag
+        if item_id in list(bag.keys()):
+            # Increase quantity for the existing item in the bag
+            bag[item_id] += quantity
+        else:
+            # Create new entry for the selected item with the specified quantity
+            bag[item_id] = quantity
     
     # Override the bag variable into the current session
     request.session['bag'] = bag
