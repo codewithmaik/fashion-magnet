@@ -15,8 +15,20 @@ def add_to_bag(request, item_id):
     # Get the redirect url from the form in order to know where to redirect as soon as the process is finished
     redirect_url = request.POST.get('redirect_url')
 
+    # Set size to None and check if the selected product has a size, if so, set it to the selected size
+    size = None
+    if 'product_size' in request.POST:
+        size = request.POST['product_size']
+
     # Set bag variable equal to current value in the session if it already exists, setting it equal to an empty dictionary otherwise
     bag = request.session.get('bag', {})
+
+    if size:
+        if item_id in list(bag.keys()):
+            if size in bag[item_id]['item_by_size'].keys():
+                bag[item_id]['item_by_size'][size] += quantity
+            else:
+                bag[item_id]['item_by_size'][size] = quantity
 
     # Increase the quantity if the item_id already exists in the bag variable, add item_id with its quantity otherwise
     if item_id in list(bag.keys()):
