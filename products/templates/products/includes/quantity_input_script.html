@@ -1,23 +1,42 @@
 <script type="text/javascript">
-/**
- * Handles the click event for elements with the class 'increment-qty'.
- * Increments the value of the associated quantity input field by 1.
- */
-$('.increment-qty').click(function(e) {
-    e.preventDefault();
-    var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
-    var currentValue = parseInt($(closestInput).val());
-    $(closestInput).val(currentValue + 1);
-    });
 
-/**
- * Handles the click event for elements with the class 'decrement-qty'.
- * Decrements the value of the associated quantity input field by 1.
- */
-$('.decrement-qty').click(function(e) {
-    e.preventDefault();
-    var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
-    var currentValue = parseInt($(closestInput).val());
-    $(closestInput).val(currentValue - 1);
-    });
+    /**
+     * Controls the enabling/disabling of buttons based on the current value.
+     */
+    function handleEnableDisable(itemId) {
+        var currentValue = parseInt($(`#id_qty_${itemId}`).val())
+        var minusDisabled = currentValue < 2;
+        var plusDisabled = currentValue > 98;
+        $(`#decrement-qty_${itemId}`).prop('disabled', minusDisabled);
+        $(`#increment-qty_${itemId}`).prop('disabled', plusDisabled);
+    }
+
+    /**
+    * Handles the click event for elements with the class 'increment-qty'.
+    * Increments the value of the associated quantity input field by 1.
+    * Calls the handleEnableDisable function to update the state of the button based on the new value.
+    */
+    $('.increment-qty').click(function(e) {
+        e.preventDefault();
+        var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
+        var currentValue = parseInt($(closestInput).val());
+        $(closestInput).val(currentValue + 1);
+        var itemId = $(this).data('item_id');
+        handleEnableDisable(itemId);
+        });
+
+    /**
+    * Handles the click event for elements with the class 'decrement-qty'.
+    * Decrements the value of the associated quantity input field by 1.
+    * Calls the handleEnableDisable function to update the state of the button based on the new value.
+    */
+    $('.decrement-qty').click(function(e) {
+        e.preventDefault();
+        var closestInput = $(this).closest('.input-group').find('.qty_input')[0];
+        var currentValue = parseInt($(closestInput).val());
+        $(closestInput).val(currentValue - 1);
+        var itemId = $(this).data('item_id');
+        handleEnableDisable(itemId);
+        });
+        
 </script>
