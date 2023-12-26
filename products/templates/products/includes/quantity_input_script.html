@@ -12,6 +12,15 @@
     }
 
     /**
+     * Controls the enabling/disabling of buttons on page load.
+     */
+    var allQtyInputs = $('.qty_input');
+    for(var i = 0; i < allQtyInputs.length; i++) {
+        var itemId = $(allQtyInputs[i]).data('item_id');
+        handleEnableDisable(itemId);
+    }
+
+    /**
     * Handles the click event for elements with the class 'increment-qty'.
     * Increments the value of the associated quantity input field by 1.
     * Calls the handleEnableDisable function to update the state of the button based on the new value.
