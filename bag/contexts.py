@@ -32,7 +32,7 @@ def bag_contents(request):
                 # Add object to list of items to access it all over the application
                 bag_items.append({
                     'item_id': item_id,
-                    'quantity': item_data,
+                    'quantity': quantity,
                     'product': product,
                     'size': size,
                     })
