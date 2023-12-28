@@ -129,4 +129,13 @@
 {% block postloadjs %}
 {{ block.super }}
 {% include 'products/includes/quantity_input_script.html' %}
+    <script type="text/javascript">
+        /**
+         * Submits the form with the class 'update-form' when the 'update' button is clicked.
+        */
+        $('.update-link').click(function(e) {
+            var form = $(this).prev('.update-form');
+            form.submit();
+        });
+    </script>
 {% endblock %}
