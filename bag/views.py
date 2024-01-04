@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, reverse
 
 def view_bag(request):
     ''' A view to render the shopping bag '''
@@ -56,3 +56,44 @@ def add_to_bag(request, item_id):
 
     # Return to the redirect url that we got earlier in the view
     return redirect(redirect_url)
+
+
+def adjust_bag(request, item_id):
+    ''' A view to adjust the quantity of the selected product in the shopping bag '''
+
+    # Get the quantity input from the form and convert it into an integer since it will come as a string
+    quantity = int(request.POST.get('quantity'))
+
+    # Set size to None and check if the selected product has a size, if so, set it to the selected size
+    size = None
+    if 'product_size' in request.POST:
+        size = request.POST['product_size']
+
+    # Set bag variable equal to current value in the session if it already exists, setting it equal to an empty dictionary otherwise
+    bag = request.session.get('bag', {})
+
+    # Check if selected item has a size
+    if size:
+        if quantity > 0:
+            # Look for item in specified size in the bag and adjust its quantity.
+            bag[item_id]['item_by_size'][size] = quantity
+        else:
+            # Delete item with specified size in the bag.
+            del bag[item_id]['item_by_size'][size]
+    else:
+        if quantity > 0:
+            # Look for item in the bag and adjust its quantity.
+            bag[item_id] = quantity
+        else:
+            # Remove item from the bag.
+            bag.pop(item_id)
+    
+    # Override the bag variable into the current session
+    request.session['bag'] = bag
+
+    # Print statement for testing 
+    # print(request.session['bag'])
+
+
+    # Return to the redirect url that we got earlier in the view
+    return redirect(reverse('view_bag'))
